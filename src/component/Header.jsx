@@ -4,16 +4,17 @@ import { NavLink } from 'react-router-dom'
 
 function Header() {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="lg" className='py-3'>
             <Container>
-                <Navbar.Brand >Drawing App</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <NavLink className="mx-1" to="/dashboard">Dashboard</NavLink>
-                        <NavLink to="/draw?&action=new">Draw</NavLink>
-                    </Nav>
-                </Navbar.Collapse>
+                <h4 className='fw-bold'>Drawing App</h4>
+                <Nav className="ms-auto my-auto">
+                    <NavLink acti className="my-auto mx-2 fw-bold text-decoration-none" to="/dashboard">Dashboard</NavLink>
+                    <NavLink className="mx-2 me-4 fw-bold my-auto text-decoration-none" to="/draw?&action=new">Draw</NavLink>
+                    <button className="btn btn-danger" onClick={() => {
+                        localStorage.clear();
+                        window.location.href="";
+                    }}>Logout</button>
+                </Nav>
             </Container>
         </Navbar>
     )

@@ -21,21 +21,29 @@ const Login = ({ history }) => {
     }
 
     return (
-        <div>login
+        <div>
+            <div className="container py-5 my-5">
+                <div className="row justify-content-center">
+                    <div className="col-12 col-md-8 col-lg-5">
+                        <div className="login-card">
+                            <h4>Login</h4>
+                            <center>
+                                <form onSubmit={login}>
+                                    <div>
+                                        <input type="email" onInput={(e) => setemail(e.target.value)} />
+                                    </div>
 
-            <center>
-                <form onSubmit={login}>
-                    <div>
-                        <input type="email" onInput={(e) => setemail(e.target.value)} />
+                                    <div>
+                                        <input type="password" onInput={(e) => setpassword(e.target.value)} />
+                                    </div>
+                                    <input  className='px-5' type="submit" value="Login" />
+                                </form>
+                                New User ? <NavLink to="/signup" >Register</NavLink>
+                            </center>
+                        </div>
                     </div>
-
-                    <div>
-                        <input type="password" onInput={(e) => setpassword(e.target.value)} />
-                    </div>
-                    <input type="submit" value="Login" />
-                </form>
-                New User ? <NavLink to="/signup" >Register</NavLink>
-            </center>
+                </div>
+            </div>
         </div>
     )
 }

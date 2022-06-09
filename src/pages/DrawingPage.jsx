@@ -30,32 +30,41 @@ function DrawingPage({ actionType, }) {
   }, [])
 
   const onSave = () => {
-    axios.post(`${url}/annotations`, {
-      type: params.type ?? 'new',
-      id: params.id,
-      annotations: annotations
-    },
-      { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
-      .then(res => {
-        console.log(res)
-        toast.success('Drawing saved');
-      }).catch(err => {
-        console.log(err.response);
-      });
+    if (annotations.length > 0) {
+      axios.post(`${url}/annotations`, {
+        type: params.type ?? 'new',
+        id: params.id,
+        annotations: annotations
+      },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        .then(res => {
+          console.log(res)
+          toast.success('Drawing saved');
+        }).catch(err => {
+          console.log(err.response);
+        });
+    } else toast.error('Empty drawings cannt be saved')
   }
 
   return (
     <div>
       <Header />
-      <div className='text-end'>
-        <button class="btn btn-secondary btn mx-2" onClick={undoActions}>Undo</button>
-        <button class="btn btn-secondary btn mx-2" onClick={onSave}>Save</button>
+      <div className="container">
+        <div className='text-end my-3'>
+          <button
+            disabled={annotations.length < 1}
+            class="btn btn-secondary btn mx-2" onClick={undoActions}>Undo</button>
+          <button
+            disabled={annotations.length < 1}
+            class="btn btn-secondary btn mx-2"
+            onClick={onSave}>Save</button>
+        </div>
+        <DrawAnnotations
+          type={params?.action}
+          annotations={annotations}
+          setAnnotations={setAnnotations}
+        />
       </div>
-      <DrawAnnotations
-        type={params?.action}
-        annotations={annotations}
-        setAnnotations={setAnnotations}
-      />
     </div>
   )
 }

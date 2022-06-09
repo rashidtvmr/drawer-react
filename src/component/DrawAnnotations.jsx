@@ -51,29 +51,31 @@ const DrawAnnotations = ({ annotations = [], setAnnotations, type = "view" }) =>
 
     const annotationsToDraw = [...annotations, ...newAnnotation];
     return (
-        <Stage
-
-            onMouseDown={type === 'view' ? undefined : handleMouseDown}
-            onMouseUp={type === 'view' ? undefined : handleMouseUp}
-            onMouseMove={type === 'view' ? undefined : handleMouseMove}
-            width={900}
-            height={700}
-        >
-            <Layer>
-                {annotationsToDraw.map(value => {
-                    return (
-                        <Rect
-                            x={value.x}
-                            y={value.y}
-                            width={value.width}
-                            height={value.height}
-                            fill="transparent"
-                            stroke="black"
-                        />
-                    );
-                })}
-            </Layer>
-        </Stage>
+        <div className="card text-center">
+            <Stage
+                className="canvaa"
+                onMouseDown={type === 'view' ? undefined : handleMouseDown}
+                onMouseUp={type === 'view' ? undefined : handleMouseUp}
+                onMouseMove={type === 'view' ? undefined : handleMouseMove}
+                width={window.innerWidth/2}
+                height={700}
+            >
+                <Layer>
+                    {annotationsToDraw.map(value => {
+                        return (
+                            <Rect
+                                x={value.x}
+                                y={value.y}
+                                width={value.width}
+                                height={value.height}
+                                fill="transparent"
+                                stroke="black"
+                            />
+                        );
+                    })}
+                </Layer>
+            </Stage>
+        </div>
     );
 };
 
