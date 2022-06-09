@@ -37,10 +37,10 @@ input {
   padding: 30px 10px !important;
 }
 
-.konvajs-content,
-canvas {
-  width: 90% !important;
-  /* left: 50%; */
+.konvajs-content{
+  /* width: 90% !important; */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 button {
