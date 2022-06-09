@@ -9,10 +9,12 @@ import toast from 'react-hot-toast';
 function DrawingPage({ actionType, }) {
   const n = useNavigate();
   const [annotations, setAnnotations] = useState([]);
+  const [initialLength, setinitialLength] = useState();
   const { state } = useLocation();
   const params = parse(window.location.href)
+
   const undoActions = () => {
-    if (annotations.length > 0) {
+    if (annotations.length > 0 && params.action !== "view") {
       setAnnotations(os => {
         return annotations.filter(sa => sa.key != annotations.length);
       })
@@ -24,6 +26,7 @@ function DrawingPage({ actionType, }) {
     if (params.id)
       axios.get(`${url}/annotation/${params.id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
         setAnnotations(res.data)
+        setinitialLength(res.data.length);
         console.log(res)
       }).catch(err => {
         console.log(err.response);
@@ -33,7 +36,7 @@ function DrawingPage({ actionType, }) {
   }, [])
 
   const onSave = () => {
-    if (annotations.length > 0) {
+    if (annotations.length > 0 && params.action !== "view") {
       axios.post(`${url}/annotations`, {
         type: params.type ?? 'new',
         id: params.id,
@@ -55,10 +58,10 @@ function DrawingPage({ actionType, }) {
       <div className="container">
         <div className='text-end my-3'>
           <button
-            disabled={annotations.length < 1}
+            disabled={annotations.length < 1 || annotations.length === initialLength}
             class="btn btn-secondary btn mx-2" onClick={undoActions}>Undo</button>
           <button
-            disabled={annotations.length < 1}
+            disabled={annotations.length < 1 || annotations.length === initialLength}
             class="btn btn-secondary btn mx-2"
             onClick={onSave}>Save</button>
         </div>

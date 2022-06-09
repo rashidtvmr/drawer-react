@@ -17,6 +17,7 @@ const Login = ({ history }) => {
             n('/dashboard');
         }).catch(err => {
             console.log('login errpor', err)
+            toast.error(err.response?.data?.message)
         })
     }
 
