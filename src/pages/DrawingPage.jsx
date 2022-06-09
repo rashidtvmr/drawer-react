@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import DrawAnnotations from '../component/DrawAnnotations'
 import Header from '../component/Header'
 import { parse } from 'query-string'
@@ -7,6 +7,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 function DrawingPage({ actionType, }) {
+  const n = useNavigate();
   const [annotations, setAnnotations] = useState([]);
   const { state } = useLocation();
   const params = parse(window.location.href)
@@ -26,6 +27,8 @@ function DrawingPage({ actionType, }) {
         console.log(res)
       }).catch(err => {
         console.log(err.response);
+        toast.error(err.response?.data?.message)
+        n(-1);
       });
   }, [])
 
@@ -41,7 +44,7 @@ function DrawingPage({ actionType, }) {
           console.log(res)
           toast.success('Drawing saved');
         }).catch(err => {
-          console.log(err.response);
+          toast.error(err.response?.data?.message)
         });
     } else toast.error('Empty drawings cannt be saved')
   }
